@@ -6,7 +6,7 @@ Git kullanım talebini sonradan fark ettim. İlk projede drive linki yeterli yaz
 
 Küçük çaplı bir proje olduğu için tüm modelleri aynı dosya altında tutmakta bir beis görmedim.
 
-Git yıllardır kullanıyorum, çalıştığım tüm projelerde kullandık. Canımı yaktığı tecrübeler de oldu maalesef, iyi öğrendiğimi düşünüyorum.
+Git yıllardır kullanıyorum, çalıştığım tüm projelerde kullandık. Canımı yaktığı tecrübeler de oldu maalesef, dolayısıyla acı tecrübelerle de beraber iyi öğrendiğimi düşünüyorum. 
 
 Teşekkürler, 
 

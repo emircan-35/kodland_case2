@@ -44,11 +44,11 @@
         <!-- Score Box -->
         <div class="score-box">
             <h3>Your Score</h3>
-            <p>Your latest score: <strong>{{ latest_score }}</strong></p>
-            <p>Your best score: <strong>{{ best_score }}</strong></p>
+            <p>Your latest score: <strong>%{{ latest_score }}</strong></p>
+            <p>Your best score: <strong>%{{ best_score }}</strong></p>
 
             <h3>Best Score in the App</h3>
-            <p>The highest score is <strong>{{ highest_score }}</strong> by <strong>{{ highest_scorer }}</strong>!</p>
+            <p>The highest score is <strong>%{{ highest_score }}</strong> by <strong>{{ highest_scorer }}</strong>!</p>
         </div>
 
         <form action="{{ url_for('quiz', username=username) }}" method="POST" onsubmit="return validateQuizForm()">

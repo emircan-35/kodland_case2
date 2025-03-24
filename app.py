@@ -103,7 +103,7 @@ def calculate_score(quiz_questions):
         correct_answer_index = quiz_question.question.true_option
         if int(answer) == correct_answer_index:
             score += 1
-    return score
+    return 100 * (score/len(quiz_questions))
 
 @app.route('/start', methods=['GET', 'POST'])
 def start_quiz():

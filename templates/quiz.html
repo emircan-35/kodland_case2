@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        .score-box {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .warning {
+            color: red;
+            font-weight: bold;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz</h1>
+
+        <!-- Score Box -->
+        <div class="score-box">
+            <h3>Your Score</h3>
+            <p>Your latest score: <strong>{{ latest_score }}</strong></p>
+            <p>Your best score: <strong>{{ best_score }}</strong></p>
+
+            <h3>Best Score in the App</h3>
+            <p>The highest score is <strong>{{ highest_score }}</strong> by <strong>{{ highest_scorer }}</strong>!</p>
+        </div>
+
+        <form action="{{ url_for('quiz', username=username) }}" method="POST" onsubmit="return validateQuizForm()">
+            <h2>What is your name?</h2>
+            <input type="text" name="username" id="username" value="{{ username }}" readonly>
+
+            <p id="warning" class="warning">Please answer all the questions before submitting.</p>
+
+            {% for quiz_question in quiz_questions %}
+                <div class="question">
+                    <label>{{ quiz_question.question.text }}</label>
+                    <div>
+                        <input type="radio" name="question_{{ quiz_question.question.id }}" value="1"> {{ quiz_question.question.option1.text }}<br>
+                        <input type="radio" name="question_{{ quiz_question.question.id }}" value="2"> {{ quiz_question.question.option2.text }}<br>
+                        <input type="radio" name="question_{{ quiz_question.question.id }}" value="3"> {{ quiz_question.question.option3.text }}<br>
+                        <input type="radio" name="question_{{ quiz_question.question.id }}" value="4"> {{ quiz_question.question.option4.text }}<br>
+                    </div>
+                </div>
+            {% endfor %}
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <footer>
+        Created by Emircan Tepe
+    </footer>
+
+    <script>
+        function validateQuizForm() {
+            var isFormValid = true;
+            var warningMessage = document.getElementById("warning");
+            warningMessage.style.display = "none";
+
+            var questions = document.querySelectorAll(".question");
+            for (var i = 0; i < questions.length; i++) {
+                var radios = questions[i].querySelectorAll("input[type='radio']");
+                var isAnswered = false;
+                for (var j = 0; j < radios.length; j++) {
+                    if (radios[j].checked) {
+                        isAnswered = true;
+                        break;
+                    }
+                }
+                if (!isAnswered) {
+                    isFormValid = false;
+                    warningMessage.style.display = "block";
+                    return false;
+                }
+            }
+
+            return isFormValid;
+        }
+    </script>
+</body>
+</html>

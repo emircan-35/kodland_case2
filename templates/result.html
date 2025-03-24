@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Results</title>
+</head>
+<body>
+    <h1>Quiz Results</h1>
+
+    <h2>Your Score</h2>
+    <p>Your latest score: {{ user.latest_score }}</p>
+    <p>Your best score: {{ user.best_score }}</p>
+
+    {% if best_user %}
+        <h2>Best Score in the App</h2>
+        <p>The highest score is {{ best_user.best_score }} by {{ best_user.username }}!</p>
+    {% endif %}
+
+    <a href="/start">Take the quiz again</a>
+</body>
+</html>

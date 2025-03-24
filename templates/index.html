@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+</head>
+<body>
+    <h1>Welcome to the Quiz</h1>
+    
+    <h2>Best Score:</h2>
+    {% if best_score %}
+        <p>The best score so far is: {{ best_score }}</p>
+    {% else %}
+        <p>No scores yet!</p>
+    {% endif %}
+
+    <h2>Start the Quiz</h2>
+    <form action="/start" method="POST">
+        <label for="username">Enter your username:</label>
+        <input type="text" name="username" required>
+        <button type="submit">Start Quiz</button>
+    </form>
+</body>
+</html>

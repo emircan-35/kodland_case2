@@ -6,12 +6,19 @@
 <body>
     <h1>Welcome to the Quiz</h1>
     
-    <h2>Best Score:</h2>
-    {% if best_score %}
-        <p>The best score so far is: {{ best_score }}</p>
+    <h2>Best Scores:</h2>
+    {% if best_users %}
+        <p>The highest score so far is: {{ highest_score }}</p>
+        <p>Achieved by: </p>
+        <ul>
+            {% for user in best_users %}
+                <li>{{ user.username }}</li>
+            {% endfor %}
+        </ul>
     {% else %}
         <p>No scores yet!</p>
     {% endif %}
+    
 
     <h2>Start the Quiz</h2>
     <form action="/start" method="POST">

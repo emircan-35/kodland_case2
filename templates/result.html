@@ -10,10 +10,16 @@
     <p>Your latest score: %{{ user.latest_score }}</p>
     <p>Your best score: %{{ user.best_score }}</p>
 
-    {% if best_user %}
-        <h2>Best Score in the App</h2>
-        <p>The highest score is %{{ best_user.best_score }} by {{ best_user.username }}!</p>
+    {% if best_users %}
+    <h2>Best Scores in the App</h2>
+    <p>The highest score is %{{ highest_score }} achieved by:</p>
+    <ul>
+        {% for user in best_users %}
+            <li><strong>{{ user.username }}</strong></li>
+        {% endfor %}
+    </ul>
     {% endif %}
+
 
     <a href="/start">Take the quiz again</a>
 </body>

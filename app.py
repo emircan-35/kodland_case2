@@ -21,8 +21,10 @@ class QuizService:
         return QuizQuestion.query.filter_by(quiz_id=quiz_id).all()
 
     @staticmethod
-    def get_best_user():
-        return User.query.order_by(User.best_score.desc()).first()
+    def get_best_users():
+        highest_score = db.session.query(db.func.max(User.best_score)).scalar()
+        return User.query.filter_by(best_score=highest_score).all() if highest_score else []
+
 
 class UserService:
     @staticmethod
@@ -50,10 +52,10 @@ def index():
         return "No quiz found in the database", 404
 
     quiz_questions = QuizService.get_quiz_questions(quiz.id)
-    best_user = QuizService.get_best_user()
-    best_score = best_user.best_score if best_user else 0
+    best_users = QuizService.get_best_users()
+    highest_score = best_users[0].best_score if best_users else 0
 
-    return render_template('index.html', quiz_questions=quiz_questions, best_score=best_score)
+    return render_template('index.html', quiz_questions=quiz_questions, highest_score=highest_score, best_users=best_users)
 
 @app.route('/result/<username>', methods=['GET'])
 def result(username):
@@ -61,7 +63,7 @@ def result(username):
     if not user:
         return f"No user found with the username: {username}", 404
 
-    best_user = QuizService.get_best_user()
+    best_user = QuizService.get_best_users()
     return render_template('result.html', user=user, best_user=best_user)
 
 @app.route('/quiz/<username>', methods=['GET', 'POST'])
@@ -72,10 +74,9 @@ def quiz(username):
 
     quiz = QuizService.get_first_quiz()
     quiz_questions = QuizService.get_quiz_questions(quiz.id)
-    best_user = QuizService.get_best_user()
-    
-    highest_score = best_user.best_score if best_user else 0
-    highest_scorer = best_user.username if best_user else "No one"
+    best_users = QuizService.get_best_users() 
+    highest_score = max(user.best_score for user in best_users) if best_users else 0
+    highest_scorers = [user.username for user in best_users if user.best_score == highest_score]
 
     if request.method == 'POST':
         try:
@@ -93,7 +94,7 @@ def quiz(username):
         latest_score=user.latest_score,
         best_score=user.best_score,
         highest_score=highest_score,
-        highest_scorer=highest_scorer
+        highest_scorers=highest_scorers 
     )
 
 def calculate_score(quiz_questions):
